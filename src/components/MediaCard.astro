@@ -1,0 +1,59 @@
+---
+import type { MediaItem } from '../data/site';
+
+interface Props {
+	item: MediaItem;
+}
+
+const { item } = Astro.props;
+const thumb = item.youtubeId
+	? `https://img.youtube.com/vi/${item.youtubeId}/hqdefault.jpg`
+	: item.thumbnail;
+---
+
+<article class="glass overflow-hidden rounded-2xl">
+	{
+		item.youtubeId ? (
+			<div class="aspect-video w-full bg-black">
+				<iframe
+					class="h-full w-full"
+					src={`https://www.youtube-nocookie.com/embed/${item.youtubeId}`}
+					title={item.title}
+					loading="lazy"
+					allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+					allowfullscreen
+				/>
+			</div>
+		) : (
+			<div class="relative flex aspect-video items-center justify-center bg-gradient-to-br from-[var(--color-surface-2)] to-[var(--color-ink)]">
+				{thumb ? (
+					<img src={thumb} alt="" class="absolute inset-0 h-full w-full object-cover opacity-60" />
+				) : null}
+				<div class="relative text-center px-6">
+					<div class="mx-auto mb-3 flex h-14 w-14 items-center justify-center rounded-full border border-white/10 bg-white/5">
+						<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="h-6 w-6 text-[var(--color-accent)]" aria-hidden="true">
+							<path d="M8 5v14l11-7z" />
+						</svg>
+					</div>
+					<p class="text-xs uppercase tracking-widest text-[var(--color-muted)]">Demo coming soon</p>
+				</div>
+			</div>
+		)
+	}
+	<div class="p-5">
+		<h3 class="font-[family-name:var(--font-display)] font-semibold text-white">{item.title}</h3>
+		<p class="mt-2 text-sm text-[var(--color-muted)]">{item.description}</p>
+		{
+			item.href && !item.youtubeId && (
+				<a
+					href={item.href}
+					target="_blank"
+					rel="noopener noreferrer"
+					class="mt-4 inline-flex text-sm font-medium text-[var(--color-accent)] hover:underline"
+				>
+					View repo →
+				</a>
+			)
+		}
+	</div>
+</article>

@@ -1,0 +1,28 @@
+---
+import { nav, profile } from '../data/site';
+---
+
+<header class="fixed inset-x-0 top-0 z-50 border-b border-white/5 bg-[#0a0b0f]/80 backdrop-blur-md">
+	<div class="mx-auto flex max-w-6xl items-center justify-between px-5 py-4">
+		<a href="#" class="font-[family-name:var(--font-display)] text-sm font-semibold tracking-tight text-white">
+			{profile.name.split(' ')[0]}<span class="text-gradient">.</span>
+		</a>
+		<nav class="hidden items-center gap-8 text-sm text-[var(--color-muted)] md:flex" aria-label="Primary">
+			{
+				nav.map((item) => (
+					<a class="transition hover:text-white" href={`#${item.id}`}>
+						{item.label}
+					</a>
+				))
+			}
+		</nav>
+		<a
+			href={profile.linkedin}
+			target="_blank"
+			rel="noopener noreferrer"
+			class="rounded-full border border-white/10 bg-white/5 px-4 py-2 text-xs font-medium text-white transition hover:border-[var(--color-accent)]/40 hover:bg-white/10"
+		>
+			LinkedIn
+		</a>
+	</div>
+</header>
