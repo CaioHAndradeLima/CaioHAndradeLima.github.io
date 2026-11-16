@@ -112,6 +112,38 @@ export const projects: Project[] = [
 		highlight: true,
 	},
 	{
+		name: 'agents-strategies',
+		summary:
+			'Multi-agent orchestration patterns—sequential pipelines, supervisor routing, parallel fan-out, and MCP hybrid tools with authz gates.',
+		href: 'https://github.com/CaioHAndradeLima/agents-strategies',
+		tags: ['Python', 'Agents', 'MCP', 'Eval'],
+		highlight: true,
+	},
+	{
+		name: 'retrieval-strategies',
+		summary:
+			'RAG retrieval lab—chunking strategies, dense/hybrid search, metadata filters, and tenant-partitioned storage simulation.',
+		href: 'https://github.com/CaioHAndradeLima/retrieval-strategies',
+		tags: ['Python', 'RAG', 'Retrieval', 'Eval'],
+		highlight: true,
+	},
+	{
+		name: 'deployment-strategies',
+		summary:
+			'Release engineering for AI—manual promote, CI quality gates, canary golden regression, and live feedback loop simulation.',
+		href: 'https://github.com/CaioHAndradeLima/deployment-strategies',
+		tags: ['Python', 'CI/CD', 'Canary', 'Eval'],
+		highlight: true,
+	},
+	{
+		name: 'design-strategies',
+		summary:
+			'Architecture decision scoring for startup, enterprise multi-tenant, and fintech high-stakes agent deployments.',
+		href: 'https://github.com/CaioHAndradeLima/design-strategies',
+		tags: ['Python', 'Architecture', 'AWS', 'GCP'],
+		highlight: true,
+	},
+	{
 		name: 'genai-eval-harness',
 		summary:
 			'Evaluation harness for RAG pipelines—retrieval layer, prompts, and agent outputs with repeatable golden datasets.',
