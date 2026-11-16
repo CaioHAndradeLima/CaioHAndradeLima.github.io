@@ -48,6 +48,54 @@ export type Project = {
 
 export const projects: Project[] = [
 	{
+		name: 'AI-System-Architecturing-Engineering',
+		summary:
+			'Markdown architecture guides for RAG, agents, guard-rails, observability, and deployment—with linked reference implementations.',
+		href: 'https://github.com/CaioHAndradeLima/AI-System-Architecturing-Engineering',
+		tags: ['RAG', 'Agents', 'Architecture', 'Production'],
+		highlight: true,
+	},
+	{
+		name: 'contexting-strategies',
+		summary:
+			'Reference lab for context assembly under token budgets—scoring, multi-hop, history, abstention, with CI measure gates.',
+		href: 'https://github.com/CaioHAndradeLima/contexting-strategies',
+		tags: ['Python', 'RAG', 'LangGraph', 'Eval', 'pytest'],
+		highlight: true,
+	},
+	{
+		name: 'output-strategies',
+		summary:
+			'Post-LLM validation pipeline—schema, citations, tool policy, failure routing, and regression gates.',
+		href: 'https://github.com/CaioHAndradeLima/output-strategies',
+		tags: ['Python', 'Validation', 'LangGraph', 'CI'],
+		highlight: true,
+	},
+	{
+		name: 'reranking-strategies',
+		summary:
+			'Compare cross-encoder, listwise, and heuristic rerank paths with calibration and contexting export bridge.',
+		href: 'https://github.com/CaioHAndradeLima/reranking-strategies',
+		tags: ['Python', 'Reranking', 'Retrieval', 'Eval'],
+		highlight: true,
+	},
+	{
+		name: 'observability-strategies',
+		summary:
+			'Golden eval, tracing metrics, LLM-as-judge patterns, incident investigation, and canary regression gates.',
+		href: 'https://github.com/CaioHAndradeLima/observability-strategies',
+		tags: ['Python', 'Tracing', 'Eval', 'LangFuse'],
+		highlight: true,
+	},
+	{
+		name: 'guardrails-strategies',
+		summary:
+			'Layered guard-rails—tenant isolation, tool scope, retrieval filters, and adversarial test-use-case gates.',
+		href: 'https://github.com/CaioHAndradeLima/guardrails-strategies',
+		tags: ['Python', 'Safety', 'Multi-tenant', 'CI'],
+		highlight: true,
+	},
+	{
 		name: 'genai-eval-harness',
 		summary:
 			'Evaluation harness for RAG pipelines—retrieval layer, prompts, and agent outputs with repeatable golden datasets.',
