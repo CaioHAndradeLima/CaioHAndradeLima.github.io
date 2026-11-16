@@ -9,6 +9,19 @@ export const profile = {
 	email: '', // optional: caio@example.com
 };
 
+export type Company = {
+	name: string;
+	note?: string;
+};
+
+/** Employers and clients from career highlights — extend in one place. */
+export const companies: Company[] = [
+	{ name: 'Itaú Unibanco', note: 'Software Manager — engineering organization of 350+' },
+	{ name: 'PayPal (Venmo)', note: 'Production mobile & backend systems' },
+	{ name: 'Amazon Shipping', note: 'Large-scale delivery platform engineering' },
+	{ name: 'Globo', note: 'Broadcast & digital product engineering' },
+];
+
 export const highlights = [
 	'Led 350+ engineers as Software Manager at Latin America’s largest financial institution',
 	'Production systems for PayPal (Venmo), Itaú Unibanco, Amazon Shipping, Globo, and more',
@@ -207,6 +220,7 @@ export const media: MediaItem[] = [
 ];
 
 export const nav = [
-	{ id: 'about', label: 'About' },
 	{ id: 'projects', label: 'Projects' },
+	{ id: 'companies', label: 'Companies' },
+	{ id: 'achievements', label: 'Achievements' },
 ];
