@@ -2,8 +2,8 @@ export const profile = {
 	name: 'Caio H. Andrade Lima',
 	title: 'AI Engineer',
 	tagline:
-		'RAG, agentic systems, and production engineering—balancing quality, latency, and cost.',
-	bio: `I'm focused on retrieval-augmented generation, agent orchestration, and the practices that ship reliable AI products. Current work spans hybrid retrieval and reranking, evaluation with golden datasets, and verification in multi-step agent workflows.`,
+		'Different approaches and trade-offs across AI engineering practices—each backed by runnable reference labs.',
+	bio: `Compare implementation paths side by side: retrieval, contexting, prompting, agents, guard-rails, observability, and deployment. Every project documents what to choose, what you give up, and how to measure it with golden datasets and CI gates.`,
 	linkedin: 'https://www.linkedin.com/in/caiohandradelima/',
 	github: 'https://github.com/CaioHAndradeLima',
 	email: '', // optional: caio@example.com
