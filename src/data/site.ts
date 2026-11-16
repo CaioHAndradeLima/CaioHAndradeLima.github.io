@@ -209,5 +209,4 @@ export const media: MediaItem[] = [
 export const nav = [
 	{ id: 'about', label: 'About' },
 	{ id: 'projects', label: 'Projects' },
-	{ id: 'contact', label: 'Contact' },
 ];
