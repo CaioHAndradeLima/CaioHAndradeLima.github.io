@@ -53,6 +53,23 @@
 	animation: fade-up 0.7s ease both;
 }
 
+.project-tag-filter.is-active {
+	border-color: color-mix(in srgb, var(--color-accent) 40%, transparent);
+	background: color-mix(in srgb, var(--color-accent) 15%, transparent);
+	color: var(--color-accent);
+}
+
+.project-tag-filter:not(.is-active) {
+	border-color: rgba(255, 255, 255, 0.1);
+	background: rgba(255, 255, 255, 0.05);
+	color: rgba(255, 255, 255, 0.8);
+}
+
+.project-tag-filter:not(.is-active):hover {
+	border-color: rgba(255, 255, 255, 0.2);
+	background: rgba(255, 255, 255, 0.1);
+}
+
 @keyframes fade-up {
 	from {
 		opacity: 0;
