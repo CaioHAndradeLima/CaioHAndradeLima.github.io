@@ -96,6 +96,22 @@ export const projects: Project[] = [
 		highlight: true,
 	},
 	{
+		name: 'prompting-strategies',
+		summary:
+			'Prompt templates, versioned policies, curated few-shot, and injection-hardened assembly with CI regression gates.',
+		href: 'https://github.com/CaioHAndradeLima/prompting-strategies',
+		tags: ['Python', 'Prompting', 'RAG', 'Eval', 'pytest'],
+		highlight: true,
+	},
+	{
+		name: 'prompting-strategies',
+		summary:
+			'Production prompt assembly—versioned policies, curated few-shot, and injection-hardened evidence fencing with CI gates.',
+		href: 'https://github.com/CaioHAndradeLima/prompting-strategies',
+		tags: ['Python', 'Prompting', 'RAG', 'Eval'],
+		highlight: true,
+	},
+	{
 		name: 'genai-eval-harness',
 		summary:
 			'Evaluation harness for RAG pipelines—retrieval layer, prompts, and agent outputs with repeatable golden datasets.',
