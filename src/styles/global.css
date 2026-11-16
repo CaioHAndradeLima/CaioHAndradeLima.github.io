@@ -70,6 +70,55 @@
 	background: rgba(255, 255, 255, 0.1);
 }
 
+.project-subtag-panel {
+	overflow: hidden;
+	max-height: 0;
+	opacity: 0;
+	transform: translateY(-6px);
+	margin-bottom: 0;
+	transition:
+		max-height 0.4s ease,
+		opacity 0.35s ease,
+		transform 0.35s ease,
+		margin-bottom 0.35s ease;
+}
+
+.project-subtag-panel.is-visible {
+	max-height: 8rem;
+	opacity: 1;
+	transform: translateY(0);
+	margin-bottom: 1.25rem;
+}
+
+.project-subtag-filter.is-active {
+	border-color: color-mix(in srgb, var(--color-accent-2) 45%, transparent);
+	background: color-mix(in srgb, var(--color-accent-2) 12%, transparent);
+	color: var(--color-accent-2);
+}
+
+.project-subtag-filter:not(.is-active) {
+	border-color: rgba(255, 255, 255, 0.08);
+	background: rgba(255, 255, 255, 0.03);
+	color: rgba(255, 255, 255, 0.65);
+}
+
+.project-subtag-filter:not(.is-active):hover {
+	border-color: rgba(255, 255, 255, 0.16);
+	background: rgba(255, 255, 255, 0.07);
+	color: rgba(255, 255, 255, 0.9);
+}
+
+.project-grid {
+	transition:
+		opacity 0.22s ease,
+		transform 0.22s ease;
+}
+
+.project-grid.is-swapping {
+	opacity: 0;
+	transform: translateY(8px);
+}
+
 @keyframes fade-up {
 	from {
 		opacity: 0;

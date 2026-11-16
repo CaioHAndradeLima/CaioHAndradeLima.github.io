@@ -6,6 +6,19 @@ import { profile, highlights, skills, projects, companies, projectCategories } f
 
 const pageTitle = `${profile.name} · ${profile.title}`;
 const pageDescription = profile.tagline;
+
+const tagsByCategory: Record<string, string[]> = Object.fromEntries(
+	projectCategories.map((cat) => [
+		cat.id,
+		[
+			...new Set(
+				projects.filter((p) => p.categories.includes(cat.id)).flatMap((p) => p.tags),
+			),
+		].sort((a, b) => a.localeCompare(b, undefined, { sensitivity: 'base' })),
+	]),
+);
+
+const categoryLabelById = Object.fromEntries(projectCategories.map((c) => [c.id, c.label]));
 ---
 
 <Layout title={pageTitle} description={pageDescription}>
@@ -74,14 +87,14 @@ const pageDescription = profile.tagline;
 				</a>
 			</div>
 			<div
-				class="mb-6 flex flex-wrap gap-2"
-				id="project-tag-filters"
+				class="mb-3 flex flex-wrap gap-2"
+				id="project-category-filters"
 				role="group"
 				aria-label="Filter projects by category"
 			>
 				<button
 					type="button"
-					data-project-filter="all"
+					data-project-category="all"
 					class="project-tag-filter is-active rounded-md border px-3 py-1.5 text-xs font-medium transition"
 					aria-pressed="true"
 				>
@@ -91,7 +104,7 @@ const pageDescription = profile.tagline;
 					projectCategories.map((cat) => (
 						<button
 							type="button"
-							data-project-filter={cat.id}
+							data-project-category={cat.id}
 							class="project-tag-filter rounded-md border px-3 py-1.5 text-xs font-medium transition"
 							aria-pressed="false"
 						>
@@ -100,10 +113,25 @@ const pageDescription = profile.tagline;
 					))
 				}
 			</div>
-			<div id="project-grid" class="grid gap-5 md:grid-cols-2">
+			<div id="project-subtag-filters" class="project-subtag-panel" aria-hidden="true">
+				<p id="project-subtag-label" class="mb-2 text-[11px] font-medium uppercase tracking-wider text-[var(--color-muted)]">
+					Refine by tag
+				</p>
+				<div class="flex flex-wrap gap-2" id="project-subtag-buttons" role="group" aria-label="Refine category by tag"></div>
+			</div>
+			<script
+				type="application/json"
+				id="project-tags-by-category"
+				set:html={JSON.stringify({ tagsByCategory, categoryLabelById })}
+			/>
+			<div id="project-grid" class="project-grid grid gap-5 md:grid-cols-2">
 				{
 					projects.map((project) => (
-						<div class="project-card-wrap" data-project-categories={project.categories.join(',')}>
+						<div
+							class="project-card-wrap"
+							data-project-categories={project.categories.join(',')}
+							data-project-tags={project.tags.join(',')}
+						>
 							<ProjectCard project={project} />
 						</div>
 					))
@@ -118,39 +146,136 @@ const pageDescription = profile.tagline;
 			(() => {
 				const grid = document.getElementById('project-grid');
 				const emptyMsg = document.getElementById('project-filter-empty');
-				if (!grid) return;
+				const subPanel = document.getElementById('project-subtag-filters');
+				const subButtons = document.getElementById('project-subtag-buttons');
+				const subLabel = document.getElementById('project-subtag-label');
+				const metaEl = document.getElementById('project-tags-by-category');
+				if (!grid || !metaEl || !subPanel || !subButtons) return;
 
-				const items = grid.querySelectorAll('[data-project-categories]');
-				const buttons = document.querySelectorAll('[data-project-filter]');
+				const meta = JSON.parse(metaEl.textContent || '{}');
+				const tagsByCategory = meta.tagsByCategory || {};
+				const categoryLabelById = meta.categoryLabelById || {};
 
-				function setActive(btn) {
-					buttons.forEach((b) => {
+				const items = grid.querySelectorAll('.project-card-wrap');
+				const categoryButtons = document.querySelectorAll('[data-project-category]');
+
+				let activeCategory = 'all';
+				let activeTag = 'all';
+
+				const FADE_MS = 220;
+
+				function setCategoryActive(btn) {
+					categoryButtons.forEach((b) => {
 						const on = b === btn;
 						b.setAttribute('aria-pressed', on ? 'true' : 'false');
 						b.classList.toggle('is-active', on);
 					});
 				}
 
-				function applyFilter(filter) {
-					const needle = filter === 'all' ? null : filter.toLowerCase();
-					let visible = 0;
+				function setSubtagActive(btn) {
+					subButtons.querySelectorAll('[data-project-tag]').forEach((b) => {
+						const on = b === btn;
+						b.setAttribute('aria-pressed', on ? 'true' : 'false');
+						b.classList.toggle('is-active', on);
+					});
+				}
 
+				function buildSubtags(category) {
+					subButtons.innerHTML = '';
+					if (category === 'all') {
+						subPanel.classList.remove('is-visible');
+						subPanel.setAttribute('aria-hidden', 'true');
+						return;
+					}
+
+					const tags = tagsByCategory[category] || [];
+					const label = categoryLabelById[category] || category;
+					if (subLabel) {
+						subLabel.textContent = `Refine · ${label}`;
+					}
+
+					const allBtn = document.createElement('button');
+					allBtn.type = 'button';
+					allBtn.dataset.projectTag = 'all';
+					allBtn.className = 'project-subtag-filter is-active rounded-md border px-2.5 py-1 text-[11px] font-medium transition';
+					allBtn.setAttribute('aria-pressed', 'true');
+					allBtn.textContent = 'All in category';
+					subButtons.appendChild(allBtn);
+
+					tags.forEach((tag) => {
+						const btn = document.createElement('button');
+						btn.type = 'button';
+						btn.dataset.projectTag = tag;
+						btn.className = 'project-subtag-filter rounded-md border px-2.5 py-1 text-[11px] font-medium transition';
+						btn.setAttribute('aria-pressed', 'false');
+						btn.textContent = tag;
+						subButtons.appendChild(btn);
+					});
+
+					subPanel.classList.add('is-visible');
+					subPanel.setAttribute('aria-hidden', 'false');
+
+					allBtn.addEventListener('click', () => onSubtagClick(allBtn, 'all'));
+					subButtons.querySelectorAll('[data-project-tag]:not([data-project-tag="all"])').forEach((btn) => {
+						btn.addEventListener('click', () =>
+							onSubtagClick(btn, btn.getAttribute('data-project-tag') || 'all'),
+						);
+					});
+				}
+
+				function matches(item) {
+					const categories = (item.getAttribute('data-project-categories') || '')
+						.split(',')
+						.map((t) => t.trim().toLowerCase());
+					const tags = (item.getAttribute('data-project-tags') || '')
+						.split(',')
+						.map((t) => t.trim().toLowerCase());
+
+					const catOk =
+						activeCategory === 'all' || categories.includes(activeCategory.toLowerCase());
+					const tagOk =
+						activeTag === 'all' ||
+						activeCategory === 'all' ||
+						tags.includes(activeTag.toLowerCase());
+					return catOk && tagOk;
+				}
+
+				function applyVisibility() {
+					let visible = 0;
 					items.forEach((item) => {
-						const categories = (item.getAttribute('data-project-categories') || '')
-							.split(',')
-							.map((t) => t.trim().toLowerCase());
-						const show = !needle || categories.includes(needle);
+						const show = matches(item);
 						item.classList.toggle('hidden', !show);
 						if (show) visible += 1;
 					});
-
 					if (emptyMsg) emptyMsg.classList.toggle('hidden', visible > 0);
 				}
 
-				buttons.forEach((btn) => {
+				function runWithFade(updateFn) {
+					grid.classList.add('is-swapping');
+					window.setTimeout(() => {
+						updateFn();
+						applyVisibility();
+						window.requestAnimationFrame(() => {
+							grid.classList.remove('is-swapping');
+						});
+					}, FADE_MS);
+				}
+
+				function onSubtagClick(btn, tag) {
+					activeTag = tag;
+					setSubtagActive(btn);
+					runWithFade(() => {});
+				}
+
+				categoryButtons.forEach((btn) => {
 					btn.addEventListener('click', () => {
-						setActive(btn);
-						applyFilter(btn.getAttribute('data-project-filter') || 'all');
+						const category = btn.getAttribute('data-project-category') || 'all';
+						setCategoryActive(btn);
+						runWithFade(() => {
+							activeCategory = category;
+							activeTag = 'all';
+							buildSubtags(category);
+						});
 					});
 				});
 			})();
