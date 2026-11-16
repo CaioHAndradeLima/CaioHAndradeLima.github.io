@@ -3,7 +3,7 @@ export const profile = {
 	title: 'AI Engineer',
 	tagline:
 		'Different approaches and trade-offs across AI engineering practices—each backed by runnable reference labs.',
-	bio: `Senior-level AI engineering in practice: parallel implementations of the same production problems—retrieval through deployment—so you can see the trade-offs, when each pattern wins, and how to prove quality with golden datasets, regression gates, and CI scorecards—not slides, runnable repos.`,
+	bio: `Parallel implementations of the same production problems—retrieval through deployment—so you can see the trade-offs, when each pattern wins, and how to prove quality with golden datasets, regression gates, and CI scorecards—not slides, runnable repos.`,
 	linkedin: 'https://www.linkedin.com/in/caiohandradelima/',
 	github: 'https://github.com/CaioHAndradeLima',
 	email: '', // optional: caio@example.com
