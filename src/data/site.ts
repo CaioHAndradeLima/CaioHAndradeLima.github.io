@@ -20,6 +20,9 @@ export const companies: Company[] = [
 	{ name: 'PayPal (Venmo)', note: 'Production mobile & backend systems' },
 	{ name: 'Amazon Shipping', note: 'Large-scale delivery platform engineering' },
 	{ name: 'Globo', note: 'Broadcast & digital product engineering' },
+	{ name: 'Sephora', note: 'Retail digital & engineering' },
+	{ name: 'Airbnb', note: 'Production software engineering' },
+	{ name: 'Hospital Albert Einstein', note: 'Healthcare digital systems' },
 ];
 
 export const highlights = [
