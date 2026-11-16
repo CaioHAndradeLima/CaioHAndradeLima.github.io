@@ -8,17 +8,19 @@ interface Props {
 const { project } = Astro.props;
 ---
 
-<article
+<a
+	href={project.href}
+	target="_blank"
+	rel="noopener noreferrer"
+	aria-label={`Open ${project.name} on GitHub`}
 	class:list={[
-		'glass group flex h-full flex-col rounded-2xl p-6 transition hover:border-white/15 hover:shadow-[0_0_40px_-12px_rgba(94,234,212,0.25)]',
+		'glass group flex h-full cursor-pointer flex-col rounded-2xl p-6 no-underline outline-none transition hover:border-white/15 hover:shadow-[0_0_40px_-12px_rgba(94,234,212,0.25)] focus-visible:ring-2 focus-visible:ring-[var(--color-accent)]/50',
 		project.highlight && 'ring-1 ring-[var(--color-accent)]/20',
 	]}
 >
 	<div class="mb-3 flex items-start justify-between gap-3">
-		<h3 class="font-[family-name:var(--font-display)] text-lg font-semibold text-white">
-			<a href={project.href} target="_blank" rel="noopener noreferrer" class="hover:text-[var(--color-accent)]">
-				{project.name}
-			</a>
+		<h3 class="font-[family-name:var(--font-display)] text-lg font-semibold text-white transition group-hover:text-[var(--color-accent)]">
+			{project.name}
 		</h3>
 		{
 			project.highlight && (
@@ -36,4 +38,4 @@ const { project } = Astro.props;
 			))
 		}
 	</ul>
-</article>
+</a>
