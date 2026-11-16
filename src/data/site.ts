@@ -104,11 +104,11 @@ export const projects: Project[] = [
 		highlight: true,
 	},
 	{
-		name: 'prompting-strategies',
+		name: 'llm-strategies',
 		summary:
-			'Production prompt assembly—versioned policies, curated few-shot, and injection-hardened evidence fencing with CI gates.',
-		href: 'https://github.com/CaioHAndradeLima/prompting-strategies',
-		tags: ['Python', 'Prompting', 'RAG', 'Eval'],
+			'Single-model, task routing, fallback chains, and cost-capped degradation with synthetic latency and CI llm-eval gates.',
+		href: 'https://github.com/CaioHAndradeLima/llm-strategies',
+		tags: ['Python', 'LLM', 'Routing', 'Eval', 'pytest'],
 		highlight: true,
 	},
 	{
